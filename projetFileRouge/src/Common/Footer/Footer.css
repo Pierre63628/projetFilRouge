@@ -1,0 +1,48 @@
+/* Footer.css */
+.footer {
+  background: #222;
+  color: #fff;
+  padding: 2rem 0 1rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.footer-socials,
+.footer-links {
+  min-width: 150px;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.footer-links a,
+.footer-socials a {
+  display: block;
+  color: #4d8cff;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+}
+
+.footer-links a:not(:last-child) {
+  margin-right: 1.5rem;
+  display: inline-block;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.footer-socials {
+  text-align: left;
+}
