@@ -1,5 +1,22 @@
-import React from "react";
+import SessionBlock from "./Sessions/SessionBlock"
 import "./Homepage.css";
+
+export type Session = {
+    id: number;
+    image: string;
+    name: string;
+    theme: string;
+    playerNb: string;
+    difficulty: string;
+    description: string;
+};
+
+const sessions: Session[] = [
+    {id: 1, image: "", name: "Rock'N SPY", theme: "Musique, Espionnage", playerNb: "2-6", difficulty: "Intermédiaire", description: "1975, Nicky Brighton est une célèbre star du rock anglais. Les services secrets britanniques pensent qu’il s’agit en réalité d’un agent du KGB, qui détiendrait une photographie compromettante d’un haut fonctionnaire anglais qui aurait collaboré avec l'ennemi pendant la Guerre. Vous, agents du MI6, êtes chargés de vous infiltrer dans le pied à terre parisien de Nicky pour confirmer cette information et trouver cette photo afin que le MI6 puisse arrêter le traître anglais et intercepter Nicky avant qu’il ne prenne la fuite pour l’URSS ! L’honneur de la Couronne en dépend, faites vite agents !"},
+    {id: 2, image: "", name: "Dr Kang", theme: "Aventure", playerNb: "2-5", difficulty: "Intermédiaire", description: "Après son échec à anéantir toute forme de vie sur terre, l'infâme Dr Kang a enlevé une des plus brillantes chimistes au monde afin de lui extorquer les connaissances nécessaires à son nouveau plan. Vous partirez en mission de sauvetage dans le repaire de Kang, en espérant que vous n'arrivez pas trop tard..."},
+    {id: 3, image: "", name: "Contagion", theme: "Apocalypse", playerNb: "2-6", difficulty: "Difficile", description: "Nous sommes en 1992, une étrange épidémie fait des ravages dans le pays. Le professeur Sabatier, éminent virologue, prétend avoir trouvé un antidote grâce à ses recherches sur des rats. Mais étrangement, il disparaît juste après cette annonce. Vous êtes les meilleurs scientifiques et vous devez fouiller son laboratoire dans l’espoir de trouver ce fameux antidote avant qu’il ne soit trop tard..."},
+    {id: 4, image: "", name: "Ghost", theme: "Disparition, Mystère", playerNb: "2-6", difficulty: "Difficile", description: "Une vielle dame passionnée d'occultisme a été assassinée il y a plus de 40 ans dans cet appartement. Personne ne sait ce qui s’est réellement passé. Aucun de ceux qui y sont entrés n’en sont revenus. Il parait que le seul moyen d'en sortir vivant serait de trouver le nom de son assassin. Par sécurité, nous en avons condamné l’accès, mais nous pouvons vous l’ouvrir si vous voulez vraiment tenter votre chance..."},
+]
 
 function Homepage() {
   return (
@@ -16,20 +33,11 @@ function Homepage() {
 
       <section className="homepage-section" id="sessions">
         <h2>Nos sessions d’escape game</h2>
-        <div className="features">
-          <div className="feature-card">
-            <h3>Le Mystère du Manoir</h3>
-            <p>Enquêtez dans un vieux manoir hanté et résolvez ses énigmes avant la fin du temps imparti.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Évasion du Laboratoire</h3>
-            <p>Collaborez pour sortir d’un laboratoire secret rempli de pièges et de codes à décrypter.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Le Trésor des Pirates</h3>
-            <p>Partez à la chasse au trésor sur une île mystérieuse et déjouez les pièges des pirates.</p>
-          </div>
-        </div>
+        {sessions.map(s => (
+            <div className="sessionBlock">
+                <SessionBlock {...s} />
+            </div>
+        ))}
       </section>
 
       <section className="homepage-section">

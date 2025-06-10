@@ -101,3 +101,9 @@
     padding: 1rem 0.5rem;
   }
 }
+
+.sessionName {
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 0;
+}
