@@ -1,7 +1,8 @@
 /* Footer.css */
 .footer {
-  background: #222;
-  color: #fff;
+  background-color: bisque;
+  width: 100vw;
+  color: black;
   padding: 2rem 0 1rem 0;
   text-align: center;
 }
@@ -45,4 +46,25 @@
 
 .footer-socials {
   text-align: left;
+}
+
+#Links > ul {
+  display: flex;
+  margin-left: 25vw;
+  padding: 3vh 0 0 0;
+  font-size: 20px;
+}
+
+#middleLink {
+  margin: 0 5vw 0 5vw;
+}
+
+#Socials {
+  display: flex;
+  font-size: 20px;
+}
+
+#Socials > div {
+  margin-top: 3vh;
+  margin-right: 5vw;
 }

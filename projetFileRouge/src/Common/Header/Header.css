@@ -1,0 +1,18 @@
+#Header {
+    width: 100%;
+    padding: 5vh 30vw 5vh 30vw;
+    background-color: bisque;
+}
+
+#Header > h1 {
+    margin: 0 5vw 10vh 5vw;
+    color: black;
+}
+
+#navLinks > #middleButton {
+    margin: 0 5vw 0 5vw;
+}
+
+#navLinks > button {
+    padding: 1.5em;
+}

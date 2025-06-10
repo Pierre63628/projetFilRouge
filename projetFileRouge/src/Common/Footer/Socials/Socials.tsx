@@ -1,6 +1,6 @@
 function Socials(){
     return(
-        <div>
+        <div id="Socials">
             <div>
                 <img src="" alt="" />
                 <a href="https://instagram.com">Follow us on Instagram</a>

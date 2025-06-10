@@ -1,9 +1,9 @@
 function Links(){
     return(
-        <div>
+        <div id="Links">
             <ul>
                 <a href="#">Legal notice</a>
-                <a href="#">Contact us</a>
+                <a id="middleLink" href="#">Contact us</a>
                 <a href="#">About sessions</a>
             </ul>
             

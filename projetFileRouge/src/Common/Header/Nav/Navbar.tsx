@@ -4,9 +4,9 @@ function Navigation(){
     const redirect = useNavigate();
     return(
         <nav>
-            <ul>
+            <ul id="navLinks">
                 <button onClick={() => redirect("/reservations")}>Reservations</button>
-                <button onClick={() => redirect("/sessions")}>About sessions</button>
+                <button id="middleButton" onClick={() => redirect("/sessions")}>About sessions</button>
                 <button onClick={() => redirect("/contactform")}>Contact us</button>
             </ul>
 
