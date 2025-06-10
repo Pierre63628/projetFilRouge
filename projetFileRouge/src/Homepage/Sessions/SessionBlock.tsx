@@ -4,9 +4,9 @@ function SessionBlock(session: Session){
     return(
         <div>
             <p className="sessionName">{session.name}</p>
-            <div>
-                <img src={session.image} alt="#"/>
-                <p className="sessionTheme">{session.theme}</p>
+            <div className="sessionInfoContainer">
+                <img className="sessionImage" src={session.image} alt="#"/>
+                <p className="sessionTheme">Theme: {session.theme}</p>
                 <p className="sessionPlayerNb">{session.playerNb} players</p>
                 <p className="sessionDifficulty">Difficulty: {session.difficulty}</p>
                 <p className="sessionDescription">{session.description}</p>
