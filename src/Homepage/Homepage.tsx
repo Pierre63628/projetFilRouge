@@ -1,5 +1,6 @@
 import SessionBlock from "./Sessions/SessionBlock.tsx";
 import "./Homepage.css";
+import { useNavigate } from "react-router-dom";
 
 
 export type Session = {
@@ -20,17 +21,27 @@ const sessions: Session[] = [
 ]
 
 function Homepage() {
+  const navigate = useNavigate();
+
   return (
     <div className="homepage bg-dark text-light min-vh-100">
       <header className="text-center py-5 bg-black">
         <div className="container">
-          <h1 className="display-4 fw-bold">Bienvenue chez EscapeXperience</h1>
+          <h1 className="display-4 fw-bold">Bienvenue à la Maison Horrifique</h1>
           <p className="lead text-secondary mb-4">
             Plongez dans l’aventure : découvrez nos sessions d’escape game immersives et vivez une expérience unique en équipe !
           </p>
-          <a href="#sessions" className="btn btn-primary btn-lg rounded-pill">
-            Découvrir les sessions
-          </a>
+          <div className="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="#sessions" className="btn btn-primary btn-lg rounded-pill">
+              Découvrir les sessions
+            </a>
+            <button
+              className="btn btn-outline-light btn-lg rounded-pill"
+              onClick={() => navigate("/login")}
+            >
+              Connexion Employé
+            </button>
+          </div>
         </div>
       </header>
 
