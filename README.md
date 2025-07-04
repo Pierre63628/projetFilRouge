@@ -1,65 +1,11 @@
-# 🎮 EscapeXperience - La Maison Horrifique
+# React + TypeScript + Vite
 
-A React TypeScript Vite application for an escape game website featuring immersive sessions and adventures.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🌐 Live Demo
+Currently, two official plugins are available:
 
-**🚀 [Visit the live site](https://pes.github.io/ProjetReac/)**
-
-## 🛠️ Tech Stack
-
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **React Router** - Client-side routing
-- **Vitest** - Testing framework
-- **React Testing Library** - Component testing
-- **GitHub Pages** - Deployment platform
-- **GitHub Actions** - CI/CD pipeline
-
-## 🚀 Quick Start
-
-### Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run start
-
-# Run tests
-npm test
-
-# Run linting
-npm run lint
-
-# Build for production
-npm run build
-```
-
-### Testing
-
-```bash
-# Run tests in watch mode
-npm test
-
-# Run tests once
-npm run test:run
-
-# Run tests with coverage
-npm run test:coverage
-```
-
-## 📦 Deployment
-
-This project is automatically deployed to GitHub Pages using GitHub Actions.
-
-- **CI/CD Pipeline**: Automated testing, linting, and deployment
-- **Live Updates**: Every push to `main` branch triggers deployment
-- **Quality Gates**: Tests must pass before deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## Expanding the ESLint configuration
 

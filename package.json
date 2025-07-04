@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://pes.github.io/ProjetReac",
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
