@@ -4,17 +4,15 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-socials">
+    <footer className="footer mt-5">
+      <div className="container py-4">
+        <div className="footer-content d-flex flex-column flex-md-row justify-content-center align-items-start gap-5">
           <Socials />
-        </div>
-        <div className="footer-links">
           <Links />
         </div>
-      </div>
-      <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} Projet Fil Rouge. Tous droits réservés.</p>
+        <div className="footer-copyright text-center small mt-4">
+          © {new Date().getFullYear()} Projet Fil Rouge. Tous droits réservés.
+        </div>
       </div>
     </footer>
   );

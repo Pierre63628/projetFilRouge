@@ -1,137 +1,68 @@
+/* Root homepage wrapper */
 .homepage {
-  min-height: 100vh;
-  background: #232323;
+  background-color: #0A070D;
   color: #fff;
+  min-height: 100vh;
   font-family: 'Segoe UI', Arial, sans-serif;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 }
 
+/* Homepage header section (not the global Header component) */
 .homepage-header {
-  text-align: center;
-  padding: 3rem 1rem 2rem 1rem;
-  background: #1a1a1a;
+  background-color: #3D0000;
+  padding: 4rem 1rem;
 }
 
 .homepage-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  color: #fff;
 }
 
 .homepage-header p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #bdbdbd;
+  color: #d9d9d9;
 }
 
-.homepage-btn {
-  display: inline-block;
-  background: #4d8cff;
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 600;
-  margin: 0.5rem;
-  transition: background 0.2s;
+/* Custom call-to-action button */
+.btn.btn-primary {
+  background-color: #69140E !important;
+  border-color: #69140E !important;
+  color: #fff !important;
 }
 
-.homepage-btn:hover {
-  background: #2563eb;
+.btn.btn-primary:hover {
+  background-color: #3D0000 !important;
+  border-color: #3D0000 !important;
+  color: #fff !important;
 }
 
-.homepage-btn.secondary {
-  background: #fff;
-  color: #232323;
-  border: 1px solid #4d8cff;
-}
 
+/* Homepage content sections */
 .homepage-section {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
-  background-color: #152540;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px #0002;
+  background-color: #65483E;
+  padding: 2rem 1.5rem;
+  margin-top: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .homepage-section h2 {
-  font-size: 2rem;
+  color: #fff;
+  border-bottom: 2px solid #3D0000;
+  padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-
-.feature-card {
-  background: #232323;
-  border-radius: 12px;
-  padding: 1.5rem 1rem;
-  min-width: 220px;
-  max-width: 260px;
-  flex: 1 1 220px;
-  box-shadow: 0 1px 8px #0003;
-}
-
-.feature-card h3 {
-  color: #4d8cff;
-  margin-bottom: 0.5rem;
-}
-
-.feature-card p {
-  color: #bdbdbd;
-}
-
-.homepage-actions {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 700px) {
-  .features {
-    flex-direction: column;
-    align-items: center;
-  }
-  .homepage-section {
-    padding: 1rem 0.5rem;
-  }
-}
-
-.sessionName {
-  font-weight: bold;
-  font-size: 30px;
-  margin-bottom: 0;
-}
-
-.sessionInfoContainer{
-  margin: 3vh 3vw 3vh 3vw;
-}
-
-.sessionName {
-  margin: 5vh 40% 3vh 40%;
-}
-
-.sessionImage {
-  margin: 0 25% 0 25%;
-}
-
-.sessionDescription {
-  margin-bottom: 10vh;
-  text-align: justify;
-}
-
-#sessions {
-  background-color: #152540;
-}
-
+/* Session container wrapper */
 .sessionBlock {
-  border: #bdbdbd solid;
-  border-width: 1px;
+  background-color: #0A070D;
+  border: 1px solid #69140E;
   border-radius: 15px;
-  margin: 5vh 0 0 0;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive padding adjustments */
+@media (max-width: 700px) {
+  .homepage-section {
+    padding: 1rem;
+  }
 }

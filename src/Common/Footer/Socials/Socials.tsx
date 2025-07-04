@@ -1,16 +1,15 @@
-function Socials(){
-    return(
-        <div id="Socials">
-            <div>
-                <img src="" alt="" />
-                <a href="https://instagram.com">Follow us on Instagram</a>
-            </div>
-            <div>
-                <img src="" alt="" />
-                <a href="https://twitter.com">Read latest new on Twitter</a>
-            </div>
-        </div>
-    )
-};
+function Socials() {
+  return (
+    <div>
+      <h5 className="footer-socials fw-bold mb-3">Follow Us</h5>
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        Instagram
+      </a>
+      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+        Twitter
+      </a>
+    </div>
+  );
+}
 
 export default Socials;

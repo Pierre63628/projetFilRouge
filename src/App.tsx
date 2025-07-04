@@ -3,15 +3,15 @@ import Common from "./Common/Common";
 import Homepage from "./Homepage/Homepage";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Common>
-                    <Route path="/" element={<Homepage />} />
-                </Common>
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Common>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+      </Common>
+    </BrowserRouter>
+  );
 }
 
 export default App;

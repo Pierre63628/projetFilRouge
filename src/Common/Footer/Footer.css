@@ -1,70 +1,35 @@
-/* Footer.css */
 .footer {
-  background-color: bisque;
-  width: 100vw;
-  color: black;
-  padding: 2rem 0 1rem 0;
-  text-align: center;
+  background-color: #65483E;
+  color: #fff;
+  width: 100%;
 }
 
-.footer-content {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+.footer h5 {
+  font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.footer-socials,
-.footer-links {
-  min-width: 150px;
-}
-
-.footer-bottom {
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
-
-.footer-links a,
-.footer-socials a {
+.footer a {
   display: block;
-  color: #4d8cff;
-  margin-bottom: 0.5rem;
+  color: #fff;
   text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
 }
 
-.footer-links a:not(:last-child) {
-  margin-right: 1.5rem;
-  display: inline-block;
+.footer a:hover {
+  color: #d9d9d9;
 }
 
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
+.footer-content {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.footer-socials {
-  text-align: left;
+.footer .text-muted {
+  opacity: 0.75;
 }
 
-#Links > ul {
-  display: flex;
-  margin-left: 25vw;
-  padding: 3vh 0 0 0;
-  font-size: 20px;
-}
-
-#middleLink {
-  margin: 0 5vw 0 5vw;
-}
-
-#Socials {
-  display: flex;
-  font-size: 20px;
-}
-
-#Socials > div {
-  margin-top: 3vh;
-  margin-right: 5vw;
+.footer-copyright {
+  color: #fff;
 }
