@@ -3,8 +3,10 @@ import Common from "./Common/Common.tsx";
 import Homepage from "./Homepage/Homepage.tsx";
 
 function App() {
+    const basename = import.meta.env.PROD ? '/ProjetReac' : '';
+
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={basename}>
             <Routes>
                 <Route element={<Common />}>
                     <Route path="/" element={<Homepage />} />

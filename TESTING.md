@@ -142,7 +142,8 @@ The CI pipeline runs:
 1. Install dependencies
 2. Lint code
 3. **Run tests** ← Your tests here!
-4. Build project
+4. Build project`
+
 
 ## 📚 Resources
 
