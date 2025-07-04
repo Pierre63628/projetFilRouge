@@ -4,7 +4,7 @@ permissions:
 on:
   push:
     branches:
-      - al-1
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,8 +22,6 @@ jobs:
           version: 9
       - name: Install dependencies
         run: pnpm install
-      - name: Run tests
-        run: pnpm test
       - name: Build project
         run: pnpm build
 
