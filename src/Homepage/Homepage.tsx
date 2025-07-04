@@ -34,7 +34,7 @@ function Homepage() {
       <section className="homepage-section" id="sessions">
         <h2>Nos sessions d’escape game</h2>
         {sessions.map(s => (
-            <div className="sessionBlock">
+            <div key={s.id} className="sessionBlock">
                 <SessionBlock {...s} />
             </div>
         ))}

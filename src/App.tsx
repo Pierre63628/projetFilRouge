@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Common from "./Common/Common.tsx";
-import Homepage from "./Homepage/Homepage.tsx";
+import Common from "./Common/Common";
+import Homepage from "./Homepage/Homepage";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Common />}>
+                <Common>
                     <Route path="/" element={<Homepage />} />
-                </Route>
+                </Common>
             </Routes>
         </BrowserRouter>
     );
