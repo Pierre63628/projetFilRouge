@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint projetFileRouge",
     "preview": "vite preview"
   },
   "dependencies": {

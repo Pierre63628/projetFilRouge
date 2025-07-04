@@ -1,4 +1,4 @@
-import type { Session } from "../Homepage"
+import type { Session } from "../Homepage.tsx"
 
 function SessionBlock(session: Session){
     return(

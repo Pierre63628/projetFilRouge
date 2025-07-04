@@ -1,5 +1,5 @@
-import Socials from "./Socials/Socials";
-import Links from "./Links/Links";
+import Socials from "./Socials/Socials.tsx";
+import Links from "./Links/Links.tsx";
 import "./Footer.css";
 
 function Footer() {

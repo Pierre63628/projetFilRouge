@@ -1,4 +1,4 @@
-import SessionBlock from "./Sessions/SessionBlock"
+import SessionBlock from "./Sessions/SessionBlock.tsx"
 import "./Homepage.css";
 
 export type Session = {
