@@ -1,4 +1,4 @@
-import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import Common from "./Common/Common.tsx";
 import Homepage from "./Homepage/Homepage.tsx";
 
