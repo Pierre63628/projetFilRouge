@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useSession } from '../../contexts/SessionContext';
+import { useAuth } from '../../contexts/AuthContext.tsx';
+import { useSession } from '../../contexts/SessionContext.tsx';
 import { Navigate } from 'react-router-dom';
-import SessionManagement from '../SessionManagement/SessionManagement';
-import BookingManagement from '../BookingManagement/BookingManagement';
+import SessionManagement from '../SessionManagement/SessionManagement.tsx';
+import BookingManagement from '../BookingManagement/BookingManagement.tsx';
 import './EmployeeDashboard.css';
 
 type DashboardTab = 'overview' | 'sessions' | 'bookings';

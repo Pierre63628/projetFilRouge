@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Session } from '../../types';
+import { Session } from '../../contexts/SessionContext.tsx';
 import './SessionCard.css';
 
 interface SessionCardProps {

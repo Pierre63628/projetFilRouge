@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSession } from '../../contexts/SessionContext';
-import { Session, TimeSlot } from '../../types';
+import { useSession, Session, TimeSlot } from '../../contexts/SessionContext.tsx';
 import './SessionForm.css';
 
 interface SessionFormProps {

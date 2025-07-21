@@ -5,6 +5,8 @@ import react from '@vitejs/plugin-react'
 
 
 export default defineConfig({
-  base : '/projetFilRouge/',
   plugins: [react()],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  }
 })

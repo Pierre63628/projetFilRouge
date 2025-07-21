@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useSession } from '../../contexts/SessionContext';
-import SessionCard from './SessionCard';
+import { useSession } from '../../contexts/SessionContext.tsx';
+import SessionCard from './SessionCard.tsx';
 import './SessionList.css';
 
 const SessionList: React.FC = () => {
@@ -85,7 +85,7 @@ const SessionList: React.FC = () => {
               <option value="all">Tous les prix</option>
               <option value="low">≤ 30€</option>
               <option value="medium">31-40€</option>
-              <option value="high">> 40€</option>
+              <option value="high"> 40€</option>
             </select>
           </div>
 

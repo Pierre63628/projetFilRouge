@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSession } from '../../contexts/SessionContext';
+import { useSession, Session, TimeSlot } from '../../contexts/SessionContext.tsx';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Session, TimeSlot } from '../../types';
 import './BookingForm.css';
 
 const BookingForm: React.FC = () => {

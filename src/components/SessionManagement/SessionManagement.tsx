@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useSession } from '../../contexts/SessionContext';
+import { useSession, Session } from '../../contexts/SessionContext.tsx';
 import SessionForm from './SessionForm';
-import { Session } from '../../types';
 import './SessionManagement.css';
 
 const SessionManagement: React.FC = () => {

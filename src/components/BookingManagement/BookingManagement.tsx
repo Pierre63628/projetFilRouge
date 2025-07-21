@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useSession } from '../../contexts/SessionContext';
-import { Booking } from '../../types';
+import { useSession, Booking } from '../../contexts/SessionContext.tsx';
 import './BookingManagement.css';
 
 const BookingManagement: React.FC = () => {

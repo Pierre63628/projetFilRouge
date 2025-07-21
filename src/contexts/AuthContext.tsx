@@ -1,6 +1,20 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { AuthState, Employee } from '../types';
+import { useLocalStorage } from '../hooks/useLocalStorage.ts';
+
+export interface Employee {
+  id: string;
+  username: string;
+  password: string; // In a real app, this would be hashed
+  name: string;
+  role: 'admin' | 'employee';
+}
+
+export interface AuthState {
+  isAuthenticated: boolean;
+  employee: Employee | null;
+  login: (username: string, password: string) => boolean;
+  logout: () => void;
+}
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
 

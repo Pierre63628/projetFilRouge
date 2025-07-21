@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { ThemeState } from '../types';
+import { useLocalStorage } from '../hooks/useLocalStorage.ts';
+
+export interface ThemeState {
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
+}
 
 const ThemeContext = createContext<ThemeState | undefined>(undefined);
 
