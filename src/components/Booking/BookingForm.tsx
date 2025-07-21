@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSession, Session, TimeSlot } from '../../contexts/SessionContext.tsx';
+import { useSession } from '../../contexts/SessionContext.tsx';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import './BookingForm.css';
 

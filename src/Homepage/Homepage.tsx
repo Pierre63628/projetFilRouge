@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSession } from "../contexts/SessionContext.tsx";
 import { useNavigate } from "react-router-dom";
 import SessionCard from "../components/Sessions/SessionCard.tsx";
