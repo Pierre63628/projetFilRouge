@@ -249,7 +249,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ session, onClose }) => {
           <div className="form-group">
             <label htmlFor="image">URL de l'image</label>
             <input
-              type="url"
+              type="text"
               id="image"
               name="image"
               value={formData.image}
