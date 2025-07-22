@@ -41,7 +41,7 @@ const Login: React.FC = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              disabled={isLoading}
+              disabled={loading.isLoading}
               placeholder="Entrez votre nom d'utilisateur"
             />
           </div>
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              disabled={isLoading}
+              disabled={loading.isLoading}
               placeholder="Entrez votre mot de passe"
             />
           </div>
