@@ -5,7 +5,7 @@ import App from './App.tsx'
 
 // Start MSW in development mode
 async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
+  if (import.meta.env.PROD) {
     return
   }
 

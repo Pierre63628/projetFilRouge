@@ -112,7 +112,7 @@ export const createLoadingState = (): LoadingState => ({
   error: null,
 });
 
-export const setLoading = (state: LoadingState, isLoading: boolean, error: string | null = null): LoadingState => ({
+export const setLoading = (_state: LoadingState, isLoading: boolean, error: string | null = null): LoadingState => ({
   isLoading,
   error,
 });

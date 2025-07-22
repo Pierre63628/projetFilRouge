@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { authApi, LoadingState, createLoadingState, setLoading } from '../services/api.ts';
 
 export interface Employee {
