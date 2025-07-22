@@ -121,15 +121,21 @@ const SessionForm: React.FC<SessionFormProps> = ({ session, onClose }) => {
         }))
       };
 
+      let success = false;
       if (session) {
-        updateSession(session.id, sessionData);
+        success = await updateSession(session.id, sessionData);
       } else {
-        addSession(sessionData);
+        success = await addSession(sessionData);
       }
 
-      onClose();
+      if (success) {
+        onClose();
+      } else {
+        setErrors({ submit: 'Erreur lors de la sauvegarde de la session' });
+      }
     } catch (error) {
       console.error('Error saving session:', error);
+      setErrors({ submit: 'Une erreur inattendue est survenue' });
     } finally {
       setIsSubmitting(false);
     }

@@ -4,7 +4,7 @@ import SessionCard from './SessionCard.tsx';
 import './SessionList.css';
 
 const SessionList: React.FC = () => {
-  const { sessions } = useSession();
+  const { sessions, loading } = useSession();
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
   const [priceFilter, setPriceFilter] = useState<string>('all');
@@ -40,6 +40,36 @@ const SessionList: React.FC = () => {
           return 0;
       }
     });
+
+  if (loading.isLoading) {
+    return (
+      <div className="session-list-container">
+        <div className="session-list-header">
+          <h1>🏚️ Nos Sessions d'Escape Game</h1>
+          <p>Chargement des sessions...</p>
+        </div>
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Chargement en cours...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading.error) {
+    return (
+      <div className="session-list-container">
+        <div className="session-list-header">
+          <h1>🏚️ Nos Sessions d'Escape Game</h1>
+          <p>Erreur lors du chargement des sessions</p>
+        </div>
+        <div className="error-message">
+          <p>❌ {loading.error}</p>
+          <button onClick={() => window.location.reload()}>Réessayer</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="session-list-container">

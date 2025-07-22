@@ -15,12 +15,15 @@ const BookingManagement: React.FC = () => {
     return matchesFilter && matchesSearch;
   });
 
-  const handleCancelBooking = (bookingId: string) => {
+  const handleCancelBooking = async (bookingId: string) => {
     const booking = bookings.find(b => b.id === bookingId);
     const session = sessions.find(s => s.id === booking?.sessionId);
-    
+
     if (window.confirm(`Êtes-vous sûr de vouloir annuler cette réservation pour "${session?.name}" ?`)) {
-      cancelBooking(bookingId);
+      const success = await cancelBooking(bookingId);
+      if (!success) {
+        alert('Erreur lors de l\'annulation de la réservation');
+      }
     }
   };
 

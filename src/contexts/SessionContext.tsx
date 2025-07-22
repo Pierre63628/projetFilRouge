@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage.ts';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { sessionsApi, bookingsApi, LoadingState, createLoadingState, setLoading } from '../services/api.ts';
 
 export interface TimeSlot {
   id: string;
@@ -39,13 +39,15 @@ export interface Booking {
 export interface SessionContextType {
   sessions: Session[];
   bookings: Booking[];
-  addSession: (session: Omit<Session, 'id'>) => void;
-  updateSession: (id: string, session: Partial<Session>) => void;
-  deleteSession: (id: string) => void;
-  addBooking: (booking: Omit<Booking, 'id' | 'bookingDate'>) => void;
-  cancelBooking: (bookingId: string) => void;
+  loading: LoadingState;
+  addSession: (session: Omit<Session, 'id'>) => Promise<boolean>;
+  updateSession: (id: string, session: Partial<Session>) => Promise<boolean>;
+  deleteSession: (id: string) => Promise<boolean>;
+  addBooking: (booking: Omit<Booking, 'id' | 'bookingDate'>) => Promise<boolean>;
+  cancelBooking: (bookingId: string) => Promise<boolean>;
   getAvailableSlots: (sessionId: string) => TimeSlot[];
   getSessionBookings: (sessionId: string) => Booking[];
+  refreshData: () => Promise<void>;
 }
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
@@ -62,124 +64,147 @@ interface SessionProviderProps {
   children: React.ReactNode;
 }
 
-// Default sessions based on the existing data, converted to new format
-const defaultSessions: Session[] = [
-  {
-    id: '1',
-    name: "Rock'N SPY",
-    theme: "Musique, Espionnage",
-    duration: 60,
-    price: 35,
-    minParticipants: 2,
-    maxParticipants: 6,
-    difficulty: 'Intermédiaire',
-    description: "1975, Nicky Brighton est une célèbre star du rock anglais. Les services secrets britanniques pensent qu'il s'agit en réalité d'un agent du KGB, qui détiendrait une photographie compromettante d'un haut fonctionnaire anglais qui aurait collaboré avec l'ennemi pendant la Guerre. Vous, agents du MI6, êtes chargés de vous infiltrer dans le pied à terre parisien de Nicky pour confirmer cette information et trouver cette photo afin que le MI6 puisse arrêter le traître anglais et intercepter Nicky avant qu'il ne prenne la fuite pour l'URSS ! L'honneur de la Couronne en dépend, faites vite agents !",
-    image: "/sessions/rock-n-spy.jpg",
-    availableSlots: []
-  },
-  {
-    id: '2',
-    name: "Dr Kang",
-    theme: "Aventure",
-    duration: 60,
-    price: 32,
-    minParticipants: 2,
-    maxParticipants: 5,
-    difficulty: 'Intermédiaire',
-    description: "Après son échec à anéantir toute forme de vie sur terre, l'infâme Dr Kang a enlevé une des plus brillantes chimistes au monde afin de lui extorquer les connaissances nécessaires à son nouveau plan. Vous partirez en mission de sauvetage dans le repaire de Kang, en espérant que vous n'arrivez pas trop tard...",
-    image: "/sessions/dr-kang.jpg",
-    availableSlots: []
-  },
-  {
-    id: '3',
-    name: "Contagion",
-    theme: "Apocalypse",
-    duration: 75,
-    price: 40,
-    minParticipants: 2,
-    maxParticipants: 6,
-    difficulty: 'Difficile',
-    description: "Nous sommes en 1992, une étrange épidémie fait des ravages dans le pays. Le professeur Sabatier, éminent virologue, prétend avoir trouvé un antidote grâce à ses recherches sur des rats. Mais étrangement, il disparaît juste après cette annonce. Vous êtes les meilleurs scientifiques et vous devez fouiller son laboratoire dans l'espoir de trouver ce fameux antidote avant qu'il ne soit trop tard...",
-    image: "/sessions/contagion.jpg",
-    availableSlots: []
-  },
-  {
-    id: '4',
-    name: "Ghost",
-    theme: "Disparition, Mystère",
-    duration: 90,
-    price: 45,
-    minParticipants: 2,
-    maxParticipants: 6,
-    difficulty: 'Difficile',
-    description: "Une vielle dame passionnée d'occultisme a été assassinée il y a plus de 40 ans dans cet appartement. Personne ne sait ce qui s'est réellement passé. Aucun de ceux qui y sont entrés n'en sont revenus. Il parait que le seul moyen d'en sortir vivant serait de trouver le nom de son assassin. Par sécurité, nous en avons condamné l'accès, mais nous pouvons vous l'ouvrir si vous voulez vraiment tenter votre chance...",
-    image: "/sessions/ghost.jpg",
-    availableSlots: []
-  }
-];
-
 export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) => {
-  const [sessions, setSessions] = useLocalStorage<Session[]>('horror-house-sessions', defaultSessions);
-  const [bookings, setBookings] = useLocalStorage<Booking[]>('horror-house-bookings', []);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoadingState] = useState<LoadingState>(createLoadingState());
 
-  const addSession = (sessionData: Omit<Session, 'id'>) => {
-    const newSession: Session = {
-      ...sessionData,
-      id: Date.now().toString(),
-    };
-    setSessions(prev => [...prev, newSession]);
-  };
+  // Load initial data
+  const refreshData = async () => {
+    setLoadingState(setLoading(loading, true));
 
-  const updateSession = (id: string, sessionData: Partial<Session>) => {
-    setSessions(prev => prev.map(session => 
-      session.id === id ? { ...session, ...sessionData } : session
-    ));
-  };
+    try {
+      const [sessionsResponse, bookingsResponse] = await Promise.all([
+        sessionsApi.getAll(),
+        bookingsApi.getAll()
+      ]);
 
-  const deleteSession = (id: string) => {
-    setSessions(prev => prev.filter(session => session.id !== id));
-    // Also remove related bookings
-    setBookings(prev => prev.filter(booking => booking.sessionId !== id));
-  };
+      if (sessionsResponse.success && sessionsResponse.data) {
+        setSessions(sessionsResponse.data);
+      }
 
-  const addBooking = (bookingData: Omit<Booking, 'id' | 'bookingDate'>) => {
-    const newBooking: Booking = {
-      ...bookingData,
-      id: Date.now().toString(),
-      bookingDate: new Date().toISOString(),
-      status: 'confirmed'
-    };
-    setBookings(prev => [...prev, newBooking]);
-    
-    // Update the time slot to reflect the booking
-    updateTimeSlotBooking(bookingData.timeSlotId, bookingData.participantCount);
-  };
+      if (bookingsResponse.success && bookingsResponse.data) {
+        setBookings(bookingsResponse.data);
+      }
 
-  const cancelBooking = (bookingId: string) => {
-    const booking = bookings.find(b => b.id === bookingId);
-    if (booking) {
-      setBookings(prev => prev.map(b => 
-        b.id === bookingId ? { ...b, status: 'cancelled' } : b
-      ));
-      
-      // Update the time slot to reflect the cancellation
-      updateTimeSlotBooking(booking.timeSlotId, -booking.participantCount);
+      setLoadingState(setLoading(loading, false));
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Failed to load data'));
     }
   };
 
-  const updateTimeSlotBooking = (timeSlotId: string, participantChange: number) => {
-    setSessions(prev => prev.map(session => ({
-      ...session,
-      availableSlots: session.availableSlots.map(slot => 
-        slot.id === timeSlotId 
-          ? { 
-              ...slot, 
-              currentBookings: Math.max(0, slot.currentBookings + participantChange),
-              isBooked: (slot.currentBookings + participantChange) >= slot.maxCapacity
-            }
-          : slot
-      )
-    })));
+  // Load data on mount
+  useEffect(() => {
+    refreshData();
+  }, []);
+
+  const addSession = async (sessionData: Omit<Session, 'id'>): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await sessionsApi.create(sessionData);
+
+      if (response.success && response.data) {
+        setSessions(prev => [...prev, response.data]);
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Failed to create session'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
+  };
+
+  const updateSession = async (id: string, sessionData: Partial<Session>): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await sessionsApi.update(id, sessionData);
+
+      if (response.success && response.data) {
+        setSessions(prev => prev.map(session =>
+          session.id === id ? response.data : session
+        ));
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Failed to update session'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
+  };
+
+  const deleteSession = async (id: string): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await sessionsApi.delete(id);
+
+      if (response.success) {
+        setSessions(prev => prev.filter(session => session.id !== id));
+        setBookings(prev => prev.filter(booking => booking.sessionId !== id));
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Failed to delete session'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
+  };
+
+  const addBooking = async (bookingData: Omit<Booking, 'id' | 'bookingDate'>): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await bookingsApi.create(bookingData);
+
+      if (response.success && response.data) {
+        setBookings(prev => [...prev, response.data]);
+        // Refresh sessions to get updated slot information
+        await refreshData();
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Failed to create booking'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
+  };
+
+  const cancelBooking = async (bookingId: string): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await bookingsApi.cancel(bookingId);
+
+      if (response.success) {
+        setBookings(prev => prev.map(b =>
+          b.id === bookingId ? { ...b, status: 'cancelled' } : b
+        ));
+        // Refresh sessions to get updated slot information
+        await refreshData();
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Failed to cancel booking'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
   };
 
   const getAvailableSlots = (sessionId: string): TimeSlot[] => {
@@ -194,6 +219,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
   const value: SessionContextType = {
     sessions,
     bookings,
+    loading,
     addSession,
     updateSession,
     deleteSession,
@@ -201,6 +227,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     cancelBooking,
     getAvailableSlots,
     getSessionBookings,
+    refreshData,
   };
 
   return (

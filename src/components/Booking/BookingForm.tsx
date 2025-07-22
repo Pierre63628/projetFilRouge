@@ -60,7 +60,7 @@ const BookingForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      addBooking({
+      const success = await addBooking({
         sessionId: selectedSessionId,
         timeSlotId: selectedTimeSlotId,
         customerEmail: customerEmail.trim(),
@@ -70,13 +70,17 @@ const BookingForm: React.FC = () => {
         status: 'confirmed'
       });
 
-      setShowSuccess(true);
-      
-      // Reset form after successful booking
-      setTimeout(() => {
-        setShowSuccess(false);
-        navigate('/sessions');
-      }, 3000);
+      if (success) {
+        setShowSuccess(true);
+
+        // Reset form after successful booking
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate('/sessions');
+        }, 3000);
+      } else {
+        setErrors({ submit: 'Erreur lors de la création de la réservation' });
+      }
 
     } catch (error) {
       console.error('Error creating booking:', error);

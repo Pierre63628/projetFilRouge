@@ -7,28 +7,21 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const { login } = useAuth();
+
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
 
-    // Simulate loading delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const success = await login(username, password);
 
-    const success = login(username, password);
-    
     if (success) {
       navigate('/employee-dashboard');
     } else {
-      setError('Nom d\'utilisateur ou mot de passe incorrect');
+      setError(loading.error || 'Nom d\'utilisateur ou mot de passe incorrect');
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -68,12 +61,12 @@ const Login: React.FC = () => {
           
           {error && <div className="error-message">{error}</div>}
           
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="login-button"
-            disabled={isLoading}
+            disabled={loading.isLoading}
           >
-            {isLoading ? 'Connexion...' : 'Se connecter'}
+            {loading.isLoading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
         

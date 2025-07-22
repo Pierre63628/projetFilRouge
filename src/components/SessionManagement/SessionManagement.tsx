@@ -13,9 +13,12 @@ const SessionManagement: React.FC = () => {
     setShowForm(true);
   };
 
-  const handleDelete = (sessionId: string) => {
+  const handleDelete = async (sessionId: string) => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cette session ? Cette action est irréversible.')) {
-      deleteSession(sessionId);
+      const success = await deleteSession(sessionId);
+      if (!success) {
+        alert('Erreur lors de la suppression de la session');
+      }
     }
   };
 

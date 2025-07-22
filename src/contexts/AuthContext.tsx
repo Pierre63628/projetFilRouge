@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage.ts';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authApi, LoadingState, createLoadingState, setLoading } from '../services/api.ts';
 
 export interface Employee {
   id: string;
   username: string;
-  password: string; // In a real app, this would be hashed
   name: string;
   role: 'admin' | 'employee';
 }
@@ -12,7 +11,8 @@ export interface Employee {
 export interface AuthState {
   isAuthenticated: boolean;
   employee: Employee | null;
-  login: (username: string, password: string) => boolean;
+  loading: LoadingState;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -30,57 +30,51 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-// Default employees for the demo (in a real app, this would come from a backend)
-const defaultEmployees: Employee[] = [
-  {
-    id: '1',
-    username: 'admin',
-    password: 'admin123', // In a real app, this would be hashed
-    name: 'Administrateur',
-    role: 'admin'
-  },
-  {
-    id: '2',
-    username: 'employee',
-    password: 'emp123',
-    name: 'Employé',
-    role: 'employee'
-  }
-];
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [employees] = useLocalStorage<Employee[]>('horror-house-employees', defaultEmployees);
-  const [currentEmployee, setCurrentEmployee] = useLocalStorage<Employee | null>('horror-house-current-employee', null);
-
-  const login = (username: string, password: string): boolean => {
-    const employee = employees.find(emp => 
-      emp.username === username && emp.password === password
-    );
-    
-    if (employee) {
-      setCurrentEmployee(employee);
-      return true;
+  const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(() => {
+    // Try to restore from localStorage on initial load
+    try {
+      const stored = localStorage.getItem('horror-house-current-employee');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
     }
-    return false;
+  });
+  const [loading, setLoadingState] = useState<LoadingState>(createLoadingState());
+
+  const login = async (username: string, password: string): Promise<boolean> => {
+    setLoadingState(setLoading(loading, true));
+
+    try {
+      const response = await authApi.login(username, password);
+
+      if (response.success && response.data) {
+        const employee = response.data.employee;
+        setCurrentEmployee(employee);
+        // Store in localStorage for persistence
+        localStorage.setItem('horror-house-current-employee', JSON.stringify(employee));
+        setLoadingState(setLoading(loading, false));
+        return true;
+      } else {
+        setLoadingState(setLoading(loading, false, response.error || 'Login failed'));
+        return false;
+      }
+    } catch (error) {
+      setLoadingState(setLoading(loading, false, 'Network error occurred'));
+      return false;
+    }
   };
 
   const logout = () => {
     setCurrentEmployee(null);
+    localStorage.removeItem('horror-house-current-employee');
+    setLoadingState(createLoadingState());
   };
-
-  // Check if the stored employee still exists in the employees list
-  useEffect(() => {
-    if (currentEmployee) {
-      const stillExists = employees.find(emp => emp.id === currentEmployee.id);
-      if (!stillExists) {
-        logout();
-      }
-    }
-  }, [employees, currentEmployee]);
 
   const value: AuthState = {
     isAuthenticated: !!currentEmployee,
     employee: currentEmployee,
+    loading,
     login,
     logout,
   };
