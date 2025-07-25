@@ -181,7 +181,6 @@ const BookingForm: React.FC = () => {
             </select>
             {errors.session && <span className="error-text">{errors.session}</span>}
           </div>
-
           {selectedSession && (
             <div className="session-info">
               <h4>{selectedSession.name}</h4>
